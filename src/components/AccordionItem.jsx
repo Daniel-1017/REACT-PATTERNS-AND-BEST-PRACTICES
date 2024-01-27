@@ -1,8 +1,18 @@
-import React from "react";
+import React, { createContext, useContext } from "react";
 
-const AccordionItem = ({ children, className }) => {
+const AccordionItemContext = createContext();
+
+export const useAccordionItemContext = () => {
+  const ctx = useContext(AccordionItemContext);
+  if (!ctx) throw new Error("Accordion item context missing");
+  return ctx
+}
+
+const AccordionItem = ({ id, children, className }) => {
   return (
-    <li className={className}>{children}</li>
+    <AccordionItemContext.Provider value={{ id }}>
+      <li className={className}>{children}</li>
+    </AccordionItemContext.Provider>
   );
 };
 
